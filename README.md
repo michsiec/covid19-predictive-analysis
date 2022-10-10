@@ -15,6 +15,8 @@ After performing data cleaning and preparation, the dataset was left with 25246 
 For the purpose of data preparation, two additional datasets have been used for easier column generation. First one came from (https://www.kaggle.com/datasets/folaraz/world-countries-and-continents-details?select=Countries+Longitude+and+Latitude.csv) and was used to add the "continent" column to the dataset. 
 Second dataset, a lookup table that was included in the dataset provided by John Hopkins University, has been used to add a population column to the dataset.
 
+
+### Data Cleaning, Preparation and EDA
 The data cleaning and preparation, as well as exploratory data analysis have been performed in RStudio (*DataCleaning_Preparation.Rmd*, *ExploratoryDataAnalysis.Rmd*).
 During the data investigation, it has been discovered that there is an issue with recovery observations after 04/08/2021 (they could have stopped being recorded). Such fact has forced us to decide how to proceed with the dataset.
 It has been decided that it is better to have possibly more variables for later predictions with Machine Learning and Deep Learning methods, rather than having just more
