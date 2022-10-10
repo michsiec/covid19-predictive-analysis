@@ -1,0 +1,208 @@
+---
+title: "PDA Data Cleaning"
+author: "Kastriot Dumani"
+date: "18/02/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(validate)
+```
+
+## Data Clean
+```{r}
+covid <- read.csv("Covid-data.csv") # Read the data in
+```
+
+```{r}
+table(is.na(covid)) # Check for NA data
+```
+No Omitted Data
+
+```{r}
+summary(covid) # Summarise the data 
+```
+
+```{r}
+covid$iso3c <- as.factor(covid$iso3c) # Change some data types to factors and remove meaningless columns
+covid$date <- as.Date.character(covid$date, format="%d/%m/%Y")
+covid$country <- as.factor(covid$country)
+covid <- subset(covid, select = -c(timestamp))
+```
+
+
+```{r}
+summary(covid) # Summarise the data again
+```
+### Creating new columns for daily cases 
+
+New column for daily deaths
+```{r}
+covid$new.d[2:nrow(covid)] <- tail(covid$deaths, -1)- head(covid$deaths, -1) # Create a new daily death count column
+
+```
+
+
+Replacing negative values in *new.d* with zeroes
+```{r}
+for (i in covid$X) { # Set any Negative Values to 0
+  if (i > 1) {  
+    if (covid$new.d[i] < 0) {
+      covid$new.d[i] <- 0
+    }
+  }
+}
+```
+
+
+New column for daily confirmed cases
+```{r}
+covid$new.c[2:nrow(covid)] <- tail(covid$confirmed, -1)- head(covid$confirmed, -1) # Create a new daily confirmed cases count column
+```
+
+
+Replacing negative values in *new.c* with zeroes
+```{r}
+for (i in covid$X) {  # Set any negative values to 0
+  if (i > 1) {  
+    if (covid$new.c[i] < 0) {
+      covid$new.c[i] <- 0
+    }
+  }
+}
+```
+
+
+New column for daily recovered cases
+```{r}
+covid$new.r[2:nrow(covid)] <- tail(covid$recovered, -1)- head(covid$recovered, -1) # Create a new daily recovered cases count column
+```
+
+
+Replacing negative values in *new.r* with zeroes
+```{r}
+for (i in covid$X) { # Set any negative values to 0
+  if (i > 1) {  
+    if (covid$new.r[i] < 0) {
+      covid$new.r[i] <- 0
+    }
+  }
+}
+```
+
+
+### Adding the countries population to the data
+```{r}
+lookup <- read.csv("UID_ISO_FIPS_LOOKUP_TABLE.csv") # Introduce a new csv file to add population
+summary(lookup)
+```
+
+```{r}
+for (i in 1:nrow(covid)) { # Adds a population column to the dataset
+  for (j in 1:nrow(lookup))
+    if (lookup$Province_State[j] == " ") {
+      if (covid$iso3c[i] == lookup$iso3[j]) {
+        covid$population[i] <- lookup$Population[j]
+      }
+    }
+}
+```
+
+```{r}
+summary(covid) # Check for any errors
+```
+
+```{r}
+covid$population <- as.numeric(covid$population) # Convert population from a character to a numeric type
+```
+
+```{r}
+covid2 <- covid[-grep("Antarctica", covid$country),] # Remove Antarctica from the dataset, due to missing population values and possible outliers that could mess up the model 
+```
+
+### Introducing the ratios for the confirmed cases, recoveries and deaths
+
+Daily deaths per 100k people:
+```{r}
+covid2$death_rate <- (covid2$new.d * 100000) / covid2$population # Shows us the deaths per 100k people in each country per day
+```
+
+Daily recoveries per 100k people:
+```{r}
+covid2$recovery_rate <- (covid2$new.r * 100000) / covid2$population # Shows us the amount recovered per 100k people per day
+```
+
+Daily confirmed cases per 100k people:
+```{r}
+covid2$infection_rate <- (covid2$new.c * 100000) / covid2$population # Shows us the amount of infected people per 100k per day
+```
+
+
+Validating the data:
+```{r}
+covid2.rules<- validator(covid2$confirmed >= 0, # Validate our dataset
+              covid2$deaths >= 0,
+              covid2$recovered >= 0,
+              covid2$confirmed <= covid2$population,
+              covid2$recovered <= covid2$population,
+              covid2$deaths <= covid2$population)
+
+qual.check <- confront(covid2,covid2.rules)
+
+summary(qual.check)
+barplot(qual.check)
+```
+
+Removing the data after 4 Aug 2021 due to incompleteness
+```{r}
+covid3 <- covid2[covid2["date"] <= "2021-08-04",] # Subset our dataset to remove dates after 4th August 2021
+covid3<- as.data.frame(covid3)
+```
+
+```{r}
+continents <- read.csv("countries and continents.csv") # Read in a continents csv file
+```
+
+```{r}
+for (i in 1:nrow(covid3)) { # Add a continents column to the dataset (will come up with an error when it gets to North American continents due to the 'NA' abbreviation, but it still works)
+  for (j in 1:nrow(continents)) {
+    if (covid3$iso3c[i] == continents$ISO3166.1.Alpha.3[j]) {
+      covid3$continent[i] = continents$Continent[j]
+    }
+  }
+}
+
+```
+
+```{r}
+covid4 <- na.omit(covid3) # Omit any NA data
+```
+
+
+```{r}
+covid5 <- covid4[covid4["continent"] == "EU",] # Subset the data into only European countries
+covid5 <- as.data.frame(covid5)
+```
+
+
+### Saving the cleaned and preprocessed data
+In result, we have obtained a dataset that includes only European countries to narrow down the scope of the analysis
+```{r}
+write.csv(covid5, file = "Europe COVID statistics.csv") # Write out the final dataset as a csv
+```
+
+```{r}
+summary(covid5$country)
+```
+
+
+```{r}
+table(is.na(covid5)) # Check for any NA values in the dataset
+```
+
+
+
