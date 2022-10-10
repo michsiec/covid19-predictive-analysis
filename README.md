@@ -57,3 +57,15 @@ want our data to be reduced has been set to 2 by default
 Parallel coordinates plot has been visualised to see how individual data points sit across all our variables. Next, the mean of each variable in each cluster has been taken in order to plot the centroids. Since hierarchical classification requires that distances between each and every point are calculated, it has taken few
 minutes to compute every distance.
 
+Even though the algorithm suggested to use five clusters, I used four since I have decided that it would be sufficient for the analysis. On the boxplot, we can spot that cluster 0 is strong on daily cases ‘new.c’, deaths ‘new.d’ and recoveries ‘new.r’, and cluster 2 have the ratios grouped , that is: ‘infection_rate’, ‘death_rate’ and ‘recovery_rate’. 
+It has been also spotted that ‘new.d’, ‘new.c’ and ‘new.r’ were grouped into one cluster, and parameters’ rates (death_rate, infection_rate, recovery_rate) were clustered together. 
+
+### Predictions using Machine Learning and Deep Learning
+The whole process of predictive data analysis have been described in *PredictiveDataAnalysis.ipynb* notebook file.
+For proper performance evaluation of the models, three main metrics have been used: Root Mean Squared Error, Mean Absolute Error, and R-squared.
+
+![image](https://user-images.githubusercontent.com/96207926/194923524-8952cf4c-d081-4cf1-ac85-560b1ded28a7.png)
+
+
+Obviously, some of the models’ results could have been improved, but I suppose it would be necessary to take more time for testing various configurations, including hyperparameters tuning, different deep learning networks architectures or using different input parameters. Also, my LSTM network could have been tried in terms of multivariate time series analysis, thus inputting more factors to the model, like daily cases, daily recoveries, or even time itself. Moreover, exploratory data analysis with unsupervised learning method, in my case that is Hierarchical Clustering have not been investigated as thoroughly as I initially wanted. For example, it could be really beneficial for the analysis to try more different clustering configurations and various principal components numbers, although it was still possible to
+reach some sensible conclusions with the current clustering results.
