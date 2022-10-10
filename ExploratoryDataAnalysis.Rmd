@@ -19,6 +19,7 @@ library(ggpubr)
 library(validate)
 library(tidyverse)
 ```
+
 - The COVID data comes from John Hopkins University
 - The data was collected between 22/01/2020 and 4/08/2021
 
