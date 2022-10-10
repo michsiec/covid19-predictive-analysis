@@ -19,3 +19,7 @@ The data cleaning and preparation, as well as exploratory data analysis have bee
 During the data investigation, it has been discovered that there is an issue with recovery observations after 04/08/2021 (they could have stopped being recorded). Such fact has forced us to decide how to proceed with the dataset.
 It has been decided that it is better to have possibly more variables for later predictions with Machine Learning and Deep Learning methods, rather than having just more
 observations, the dataset, after performing data cleaning and preparation, has been decreased to 25,246 rows (561 per country), covering the period between 22/01/2020 and 04/08/2021.
+
+
+Moving to the exploratory data analysis, it has been checked whether the cleaned and prepared data is correct, along with some data investigation (checking the variable types, data dimensions, etc.) . Since ‘new.d’ is the variable of interest, the correlation has been evaluated between ‘new.d’ and other
+variables. The results shown that the variables of ‘new.c’, ‘new.r’ and ‘population’ all have correlation score higher than 0.5 (0.67, 0.598 and 0.536 respectively), which could indicate possible relationship between the variables, thus worth including in prediction models.
