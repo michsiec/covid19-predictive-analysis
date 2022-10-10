@@ -1,0 +1,437 @@
+---
+title: "Exploratory Data Analysis"
+author: "Michal Sieczkos"
+date: "24/02/2022"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Importing necessary libraries
+```{r}
+library(ggplot2)
+library(ggpubr)
+library(validate)
+library(tidyverse)
+```
+- The COVID data comes from John Hopkins University
+- The data was collected between 22/01/2020 and 4/08/2021
+
+
+Set working directory (if necessary)
+```{r}
+#setwd("path")
+```
+
+
+### Get the pre-processed data for Europe 
+```{r}
+covid_eu <- read.csv("Europe COVID statistics.csv") # read the dataset
+
+head(covid_eu)
+dim(covid_eu)
+str(covid_eu)
+
+summary(covid_eu)
+covid_eu$date <- as.Date(covid_eu$date) #convert the 'date' column from character representations to Date format
+
+# Delete the unnecessary columns
+covid_eu <- subset(covid_eu, select = -c(X.1, X, continent))
+```
+
+
+Creating another dataset to check for the correlation between the variables:
+```{r}
+covid_eu2 <- subset(covid_eu, select = -c(date, country, iso3c))
+
+cor(covid_eu2)
+```
+The results shown that the variables of ‘new.c’, ‘new.r’ and ‘population’ all have correlation score higher than 0.5 (0.67, 0.598 and 0.536 respectively), which could indicate possible relationship between the variables, thus worth including in prediction models.
+
+
+### Investigate the countries data
+
+```{r}
+# Final infections (as a sum)
+covid_eu$country <- as.factor(covid_eu$country)
+covid_cases <- covid_eu[covid_eu$date == "2021-08-04",] # get the total values for each country (last day the data was gathered is 4-08-2021)
+
+head(covid_cases)
+summary(covid_cases)
+```
+
+
+Population of the countries: 
+```{r}
+eu_pop <- covid_cases$population
+
+head(eu_pop)
+summary(eu_pop)
+
+#Infection rate (cases vs population)
+covid_inf_rate <- (covid_cases$confirmed/covid_cases$population)*100
+
+head(covid_inf_rate)
+summary(covid_inf_rate)
+```
+
+
+Checking whether every country has the same amount of days, from which data have been collected:
+```{r}
+covid_eu$iso3c <- as.factor(covid_eu$iso3c)
+summary(covid_eu$iso3c)
+summary(covid_eu$country)
+```
+
+
+Bar plot for cases in the European countries:
+```{r}
+eu_cases <- ggplot(data = covid_cases, aes(x = confirmed, y = country)) + geom_bar(stat = "identity", fill = "green" , color = "black") + labs(x = "Number of cases", y = "Country", title = "COVID-19 Cases in Europe") + theme_gray()
+eu_cases
+```
+
+
+Bar plot for deaths in the European countries:
+```{r}
+#e <- ggplot(data = covid_4aug21, aes(confirmed)) + geom_bar(stat = "count", color = "red") + theme_light()
+
+eu_deaths <- ggplot(data = covid_cases, aes(x = deaths, y = country)) + geom_bar(stat = "identity", fill = "red", colour = "black") + labs(x = "Number of deaths", y = "Country", title = "COVID-19 Deaths in Europe") + theme_gray()
+eu_deaths
+```
+
+
+European countries population plot: 
+```{r}
+pop <- ggplot(data = covid_cases, aes(x = population, y = country)) + geom_bar(stat = "identity", fill = "blue", colour = "black") + labs(x = "Population", y = "Country", title = "Countries population") + theme_gray()
+pop
+```
+
+
+Taking a closer look at the UK data:
+```{r}
+# Get the UK data
+covid_gbr = covid_eu[covid_eu$iso3c == "GBR",]
+head(covid_gbr)
+summary(covid_gbr)
+
+
+# Recovery rate
+gbr_recov_rate <- ggplot(data = covid_gbr, aes(c(1:561), recovery_rate)) + geom_point(color = "green") + labs(x = "Days passed since 22/01/2020", y = "Recovery rate", title = "COVID-19 recovery rate in the UK")
+gbr_recov_rate
+
+
+# Death rate
+gbr_death_rate <- ggplot(data = covid_gbr, aes(c(1:561), death_rate)) + geom_point(color = "red") + labs(x = "Days passed since 22/01/2020", y = "Death rate", title = "COVID-19 death rate in the UK")
+gbr_death_rate
+
+
+# Total cases
+gbr_cases <- ggplot(data = covid_gbr, aes(c(1:561), confirmed)) + geom_point(color = "#f0c739") + labs(x = "Days passed since 22/01/2020", y = "Confirmed cases", title = "COVID-19 cases in the UK")
+gbr_cases
+
+
+# Daily cases
+gbr_new_c <- ggplot(data = covid_gbr, aes(c(1:561), new.c)) + geom_point(color = "#f0c739") + labs(x = "Days passed since 22/01/2020", y = "New daily cases", title = "COVID-19 daily cases in the UK")
+gbr_new_c
+
+
+# Total deaths
+gbr_deaths <- ggplot(data = covid_gbr, aes(c(1:561), deaths)) + geom_point(color = "#f03961") + labs(x = "Days passed since 22/01/2020", y = "Deaths", title = "COVID-19 deaths in the UK")
+gbr_deaths
+
+
+# Daily deaths
+gbr_new_d <- ggplot(data = covid_gbr, aes(c(1:561), new.d)) + geom_point(color = "#f03961") + labs(x = "Days passed since 22/01/2020", y = "New daily deaths", title = "COVID-19 daily deaths in the UK")
+gbr_new_d
+
+
+# Total recovered
+gbr_recovered <- ggplot(data = covid_gbr, aes(c(1:561), recovered)) + geom_point(color = "#39d3f0") + labs(x = "Days passed since 22/01/2020", y = "Recovered", title = "Recovered from COVID-19 in the UK")
+gbr_recovered
+
+
+# Daily recovered
+gbr_new_r <- ggplot(data = covid_gbr, aes(c(1:561), new.r)) + geom_point(color = "#39d3f0") + labs(x = "Days passed since 22/01/2020", y = "Daily recoveries", title = "Daily recoveries from COVID-19 in the UK")
+gbr_new_r
+
+
+# Daily cases vs deaths
+gbr_daily_cd <- ggplot(data = covid_gbr, aes(new.c, new.d)) + geom_point(color = "#f07539") + labs(x = "Daily cases", y = "Daily deaths", title = "COVID-19 daily cases vs deaths in the UK")
+gbr_daily_cd
+
+
+# Total cases vs deaths
+gbr_cd <- ggplot(data = covid_gbr, aes(confirmed, deaths)) + geom_point(color = "#f07539") + labs(x = "Cases", y = "Deaths", title = "COVID-19 cases vs deaths in the UK")
+gbr_cd
+
+
+# Daily cases vs recovered
+gbr_daily_cr <- ggplot(data = covid_gbr, aes(new.c, new.r)) + geom_point(color = "#9d39f0") + labs(x = "Daily cases", y = "Daily recoveries", title = "COVID-19 daily cases vs recoveries in the UK")
+gbr_daily_cr
+
+
+# Total cases vs recovered
+gbr_cr <- ggplot(data = covid_gbr, aes(confirmed, recovered)) + geom_point(color = "#9d39f0") + labs(x = "Confirmed cases", y = "Recoveries", title = "COVID-19 cases vs recoveries in the UK")
+gbr_cr
+
+
+# Daily recovered vs deaths
+gbr_daily_rd <- ggplot(data = covid_gbr, aes(new.r, new.d)) + geom_point(color = "#a8a800") + labs(x = "Daily recoveries", y = "Daily deaths", title = "COVID-19 daily recoveries vs deaths in the UK")
+gbr_daily_rd
+
+
+# Total recovered vs deaths
+gbr_rd <- ggplot(data = covid_gbr, aes(recovered, deaths)) + geom_point(color = "#a8a800") + labs(x = "Recovered", y = "Deaths", title = "COVID-19 recovered vs deaths in the UK")
+gbr_rd
+
+```
+
+
+Arranging the plots and saving externally:
+```{r}
+uk_plots <- ggarrange(gbr_recov_rate, gbr_death_rate, gbr_cases, gbr_new_c, gbr_deaths, gbr_new_d, gbr_recovered, gbr_new_r, gbr_daily_cd, gbr_cd, gbr_daily_cr, gbr_cr, gbr_daily_rd, gbr_rd, ncol = 1, nrow = 2)
+uk_plots
+
+uk_plots[[1]] #Visualize the page 1 (just to check)
+
+ggexport(uk_plots, filename = "UK_plots.pdf") # Save the plots into PDF file
+```
+
+
+
+Focusing on countries with bottom top10 population (from 6th to 10th most populated)
+```{r}
+# Get the top 5 countries with the most population
+countries_pop <- covid_cases[covid_cases$population > 15000000,]
+
+#countries_pop <- sort(countries_pop$population, decreasing = TRUE)
+# countries_pop <- within(countries_pop, population <- sort(countries_pop$population, decreasing = TRUE))
+
+pop_top5 <- ggplot(data = countries_pop, aes(x = population, y = country)) + geom_bar(stat = "identity", fill = "blue", colour = "black") + labs(x = "Population", y = "Country", title = "Countries population") + theme_gray()
+pop_top5
+```
+
+
+
+
+### Analysing the top6-10 countries (Spain, Poland, Romania, Ukraine, Netherlands)
+
+Top6-10 countries in terms of population is the area of focus in this case, whereas top5 is only analysed briefly (it has been assigned for detailed analysis to other member of the group)
+```{r}
+# Get the data for Spain
+covid_esp = covid_eu[covid_eu$iso3c == "ESP",]
+head(covid_esp)
+summary(covid_esp)
+
+# Get the data for Poland
+covid_pol = covid_eu[covid_eu$iso3c == "POL",]
+head(covid_pol)
+summary(covid_pol)
+
+# Get the data for Romania
+covid_rou = covid_eu[covid_eu$iso3c == "ROU",]
+head(covid_rou)
+summary(covid_rou)
+
+# Get the data for Netherlands
+covid_nld = covid_eu[covid_eu$iso3c == "NLD",]
+head(covid_nld)
+summary(covid_nld)
+
+# Get the data for Ukraine
+covid_ukr = covid_eu[covid_eu$iso3c == "UKR",]
+head(covid_ukr)
+summary(covid_ukr)
+```
+
+
+
+
+### Get the data details for top5 populated EU countries
+
+Russia:
+```{r}
+covid_rus = covid_eu[covid_eu$iso3c == "RUS",]
+head(covid_rus)
+summary(covid_rus)
+```
+
+Germany:
+```{r}
+covid_ger = covid_eu[covid_eu$iso3c == "DEU",]
+head(covid_ger)
+summary(covid_ger)
+```
+
+United Kingdom:
+```{r}
+covid_gbr = covid_eu[covid_eu$iso3c == "GBR",]
+head(covid_gbr)
+summary(covid_gbr)
+```
+
+France:
+```{r}
+covid_fra = covid_eu[covid_eu$iso3c == "FRA",]
+head(covid_fra)
+summary(covid_fra)
+```
+
+Italy:
+```{r}
+covid_ita = covid_eu[covid_eu$iso3c == "ITA",]
+head(covid_ita)
+summary(covid_ita)
+```
+
+### Plots
+
+Plot new cases for bottom top10 most populated EU countries: 
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = date, y = new.c, color = country)) +
+  geom_line(show.legend = TRUE) +
+  scale_x_date(date_breaks ="2 month", date_labels ="%m/%y") +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~country, ncol = 1, scales = "free_y") +
+  labs(x="Date", y="New Cases", title = "New cases each month in the countries") +
+  theme_minimal() + guides(color="none")
+
+```
+
+
+Plot cumulative cases for bottom top10 most populated EU countries: 
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = date, y = confirmed, color = country)) +
+  geom_line(show.legend = FALSE) +
+  scale_x_date(date_breaks = "2 month", date_labels = "%m/%y") +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~country, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = "Confirmed cases", title = "Confirmed cases in the countries") +
+  theme_minimal() + guides(color="none")
+
+```
+
+
+Plot new deaths for bottom top10 most populated EU countries:
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = date, y = new.d, color = country)) +
+  geom_line(show.legend = FALSE) +
+  scale_x_date(date_breaks = "2 month", date_labels = "%m/%y") +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~country, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = "New Deaths", title = "New deaths each month in the countries") +
+  theme_minimal() + guides(color="none")
+
+```
+
+
+Plot cumulative deaths for bottom top10 most populated EU countries: 
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = date, y = confirmed, color = country)) +
+  geom_line(show.legend = FALSE) +
+  scale_x_date(date_breaks = "2 month", date_labels = "%m/%y") +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~country, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = "Deaths", title = "Confirmed deaths in the countries") +
+  theme_minimal() + guides(color="none")
+``` 
+
+
+Plot death rate for bottom top10 most populated EU countries:
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = date, y = death_rate, color = country)) +
+  geom_line(show.legend = FALSE) +
+  scale_x_date(date_breaks = "2 month", date_labels = "%m/%y") +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~country, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = "Death rate", title = "Death rate in the countries") +
+  theme_minimal() + guides(color="none")
+  
+```
+
+
+Plot recovery rate for bottom top10 most populated EU countries:
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = date, y = recovery_rate, color = country)) +
+  geom_line(show.legend = FALSE) + 
+  scale_x_date(date_breaks = "2 month", date_labels = "%m/%y") +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~country, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = "Recovery Rate", title = "Recovery rate in the countries") + 
+  theme_minimal()
+```
+
+
+Plot recoveries for bottom top10 most populated EU countries:
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = date, y = recovered, color = country)) +
+  geom_line(show.legend = FALSE) +
+  scale_x_date(date_breaks = "2 month", date_labels = "%m/%y") +
+  scale_y_continuous(labels = scales::comma) +
+  facet_wrap(~country, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = "Recovered", title = "Recoveries in the country") +
+  theme_minimal()
+
+```
+
+
+# Boxplots
+
+Since daily metrics are of particular interest, cumulative cases/deaths plots will be omitted. 
+
+
+Boxplots for daily cases:
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = country, y = new.c)) +
+  geom_boxplot(notch = TRUE) +
+  stat_summary(fun.y = mean, geom = "point", shape = 20, size = 4) +
+  facet_wrap(~country, ncol = 2, scales = "free_y") +
+  labs(x = "Country", y = "Daily cases", title = "Daily cases") 
+
+```
+
+
+Boxplots for daily deaths:
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = country, y = new.d)) +
+  geom_boxplot(notch = TRUE) +
+  stat_summary(fun.y = mean, geom = "point", shape = 20, size = 4) +
+  facet_wrap(~country, ncol = 2, scales = "free_y") +
+  labs(x = "Country", y = "Daily deaths", title = "Daily deaths") 
+```
+
+
+Boxplot for death rate: 
+```{r}
+covid_eu %>%
+  filter(country %in% c("Spain", "Ukraine", "Poland", "Romania", "Netherlands")) %>%
+  ggplot(aes(x = country, y = death_rate)) +
+  geom_boxplot(notch = TRUE) +
+  stat_summary(fun.y = mean, geom = "point", shape = 20, size = 4) +
+  facet_wrap(~country, ncol = 2, scales = "free_y") +
+  labs(x = "Country", y = "Death rate", title = "Death rate") 
+```
+
