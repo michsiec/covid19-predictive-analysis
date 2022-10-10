@@ -1,6 +1,6 @@
 ---
 title: "PDA Data Cleaning"
-author: "Kastriot Dumani"
+author: "K. Dumani"
 date: "18/02/2022"
 output: pdf_document
 ---
