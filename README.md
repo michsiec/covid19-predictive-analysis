@@ -26,3 +26,34 @@ variables. The results shown that the variables of ‘new.c’, ‘new.r’ and 
 
 For the purpose of making investigation of the data more detailed, we have agreed to split the ten most populated countries into two clusters of five: first five (Russia, UK, Germany, France, Italy) and bottom five of ten most populated (Spain, Ukraine, Poland, Romania, Netherlands).
 My area of focus was to investigate second cluster, that is sixth to tenth most populated European country. With that in mind, I have visualised various variables from the dataset to see how they have changed over time.
+
+![image](https://user-images.githubusercontent.com/96207926/194916186-de228a5f-f2cc-406e-9d34-478d0d4f7028.png)
+
+![image](https://user-images.githubusercontent.com/96207926/194916256-3c478dc9-716e-4c23-ad6f-2aae290b7c16.png)
+
+![image](https://user-images.githubusercontent.com/96207926/194916319-7b3e73dd-5ea7-452d-8bd2-b3d056a4b068.png)
+
+![image](https://user-images.githubusercontent.com/96207926/194916365-5aa950e8-6177-4ca0-b4a1-a82f132ca743.png)
+
+![image](https://user-images.githubusercontent.com/96207926/194916408-aa752b86-b831-4030-a600-2dbb1a20c744.png)
+
+![image](https://user-images.githubusercontent.com/96207926/194916435-e82848ed-4ac0-47b2-a2e9-cc57ff6b00e8.png)
+
+
+Furthermore, an unsupervised learning method was used in order to increase
+the depth of the analysis. I have decided to use hierarchical clustering algorithm to group the
+observations and try to gain insight into possible patterns hidden in our data. In order to perform
+it, the functions from OpenClassrooms “Perform an Exploratory Data Analysis” course
+(https://github.com/OpenClassrooms-Student-Center/Multivariate-Exploratory-Analysis) have been
+used and slightly modified for my case. Some initial assumptions have been made before proceeding to
+the clustering:
+- Euclidean distance has been chosen as a distance measure between the data points
+- In order to measure distance between two clusters of data points, Ward linkage criterion has
+been used, meaning that the comparison between two clusters is done by combining them into
+one cluster and calculating the variance of resultant cluster
+- The dimensions have been reduced using PCA, where the number of dimensions to which we
+want our data to be reduced has been set to 2 by default
+
+Parallel coordinates plot has been visualised to see how individual data points sit across all our variables. Next, the mean of each variable in each cluster has been taken in order to plot the centroids. Since hierarchical classification requires that distances between each and every point are calculated, it has taken few
+minutes to compute every distance.
+
