@@ -5,12 +5,27 @@ The project regards COVID-19 data analysis and forecasting using different machi
 
 For the purpose of the project, the scope of the analysis has been narrowed down to one continent, Europe. The initial dataset (with global information, before performing data cleaning and preparation) had 145142 observations (gathered from 22 Jan 2020 to 15 Feb 2022) in following columns:
 
-![image](https://user-images.githubusercontent.com/96207926/194898548-abfa97ab-2379-4341-8be5-cbecf6ed9238.png)
-
+| Name | Domain | Description |
+|------|--------|-------------|
+| X | integer | *Current row/observation* |
+| country | string | *Name of the country* |
+| iso3c | string | *3 letter country code* |
+| date | date | *Date of the observation (YYYY-MM-DD)* |
+| confirmed | integer | *The cumulative amount of confirmed positive cases recorded in a country on that date* |
+| deaths | integer | *The cumulative amount of deaths recorded in a country on that date* |
+| recovered | integer | *The cumulative amount of recovered recorded in a country on that date* |
 
 After performing data cleaning and preparation, the dataset was left with 25246 rows (561 rows of data per country). In addition to original variables, new columns has been created and merged with the dataset:
 
-![image](https://user-images.githubusercontent.com/96207926/194899552-3b844c5a-1a7a-40d7-bae7-752bd883d0af.png)
+
+| Name | Domain | Description |
+|------|--------|-------------|
+| new.d | integer | *New deaths on that day* |
+| new.c | integer | *New positive cases on that day* |
+| new.r | integer | *New recovered on that day* |
+| death_rate | float | *The number of deaths per 100,000 people in each country per day* |
+| recovery_rate | float | *The number of recovered per 100,000 people in each country per day* |
+| infection_rate | float | *The number of infected people per 100,000 people in each country per day* |
 
 For the purpose of data preparation, two additional datasets have been used for easier column generation. First one came from (https://www.kaggle.com/datasets/folaraz/world-countries-and-continents-details?select=Countries+Longitude+and+Latitude.csv) and was used to add the "continent" column to the dataset. 
 Second dataset, a lookup table that was included in the dataset provided by John Hopkins University, has been used to add a population column to the dataset.
