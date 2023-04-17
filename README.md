@@ -38,8 +38,8 @@ It has been decided that it is better to have possibly more variables for later 
 observations, the dataset, after performing data cleaning and preparation, has been decreased to 25,246 rows (561 per country), covering the period between 22/01/2020 and 04/08/2021.
 
 
-Moving to the exploratory data analysis, it has been checked whether the cleaned and prepared data is correct, along with some data investigation (checking the variable types, data dimensions, etc.) . Since ‘new.d’ is the variable of interest, the correlation has been evaluated between ‘new.d’ and other
-variables. The results shown that the variables of ‘new.c’, ‘new.r’ and ‘population’ all have correlation score higher than 0.5 (0.67, 0.598 and 0.536 respectively), which could indicate possible relationship between the variables, thus worth including in prediction models.
+Moving to the exploratory data analysis, it has been checked whether the cleaned and prepared data is correct, along with some data investigation (checking the variable types, data dimensions, etc.) . Since `new.d` is the variable of interest, the correlation has been evaluated between `new.d` and other
+variables. The results shown that the variables of `new.c`, `new.r` and `population` all have correlation score higher than 0.5 (0.67, 0.598 and 0.536 respectively), which could indicate possible relationship between the variables, thus worth including in prediction models.
 
 For the purpose of making investigation of the data more detailed, we have agreed to split the ten most populated countries into two clusters of five: first five (Russia, UK, Germany, France, Italy) and bottom five of ten most populated (Spain, Ukraine, Poland, Romania, Netherlands).
 My area of focus was to investigate second cluster, that is sixth to tenth most populated European country. With that in mind, I have visualised various variables from the dataset to see how they have changed over time.
@@ -74,8 +74,8 @@ want our data to be reduced has been set to 2 by default
 Parallel coordinates plot has been visualised to see how individual data points sit across all our variables. Next, the mean of each variable in each cluster has been taken in order to plot the centroids. Since hierarchical classification requires that distances between each and every point are calculated, it has taken few
 minutes to compute every distance.
 
-Even though the algorithm suggested to use five clusters, I used four since I have decided that it would be sufficient for the analysis. On the boxplot, we can spot that cluster 0 is strong on daily cases ‘new.c’, deaths ‘new.d’ and recoveries ‘new.r’, and cluster 2 have the ratios grouped , that is: ‘infection_rate’, ‘death_rate’ and ‘recovery_rate’. 
-It has been also spotted that ‘new.d’, ‘new.c’ and ‘new.r’ were grouped into one cluster, and parameters’ rates (death_rate, infection_rate, recovery_rate) were clustered together. 
+Even though the algorithm suggested to use five clusters, I used four since I have decided that it would be sufficient for the analysis. On the boxplot, we can spot that cluster 0 is strong on daily cases `new.c`, deaths `new.d` and recoveries `new.r`, and cluster 2 have the ratios grouped , that is: `infection_rate`, `death_rate` and `recovery_rate`. 
+It has been also spotted that `new.d`, `new.c` and `new.r` were grouped into one cluster, and parameters’ rates (death_rate, infection_rate, recovery_rate) were clustered together. 
 
 ### Predictions using Machine Learning and Deep Learning
 The whole process of predictive data analysis have been described in *PredictiveDataAnalysis.ipynb* notebook file.
