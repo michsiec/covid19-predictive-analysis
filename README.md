@@ -1,9 +1,8 @@
 # Predictive Analysis of COVID-19
-*Group project regarding predictive data analysis*
 
-The project regards COVID-19 data analysis and forecasting using different machine learning and deep learning methods. The data used for the analysis comes from the repository of the CSSE John Hopkins University (https://github.com/CSSEGISandData/COVID-19). 
+Group project regarding COVID-19 data analysis and forecasting using different machine learning and deep learning methods. The data used for the analysis comes from the repository of the [CSSE John Hopkins University](https://github.com/CSSEGISandData/COVID-19) 
 
-For the purpose of the project, the scope of the analysis has been narrowed down to one continent, Europe. The initial dataset (with global information, before performing data cleaning and preparation) had 145142 observations (gathered from 22 Jan 2020 to 15 Feb 2022) in following columns:
+For the purpose of the project, the scope of the analysis has been narrowed down to one continent, Europe. The initial dataset (with global information, before performing data cleaning and preparation) had 145,142 observations (gathered from 22 Jan 2020 to 15 Feb 2022) in following columns:
 
 | Name | Domain | Description |
 |------|--------|-------------|
@@ -75,14 +74,14 @@ Parallel coordinates plot has been visualised to see how individual data points 
 minutes to compute every distance.
 
 Even though the algorithm suggested to use five clusters, I used four since I have decided that it would be sufficient for the analysis. On the boxplot, we can spot that cluster 0 is strong on daily cases `new.c`, deaths `new.d` and recoveries `new.r`, and cluster 2 have the ratios grouped , that is: `infection_rate`, `death_rate` and `recovery_rate`. 
-It has been also spotted that `new.d`, `new.c` and `new.r` were grouped into one cluster, and parameters’ rates (death_rate, infection_rate, recovery_rate) were clustered together. 
+It has been also spotted that `new.d`, `new.c` and `new.r` were grouped into one cluster, and parameters’ rates (`death_rate`, `infection_rate`, `recovery_rate`) were clustered together. 
 
 ### Predictions using Machine Learning and Deep Learning
 The whole process of predictive data analysis have been described in *PredictiveDataAnalysis.ipynb* notebook file.
-For proper performance evaluation of the models, three main metrics have been used: Root Mean Squared Error, Mean Absolute Error, and R-squared.
+For proper performance evaluation of the models, three main metrics have been used: Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), and R-squared.
 
 ![image](https://user-images.githubusercontent.com/96207926/194923524-8952cf4c-d081-4cf1-ac85-560b1ded28a7.png)
 
 
-Obviously, some of the models’ results could have been improved, but I suppose it would be necessary to take more time for testing various configurations, including hyperparameters tuning, different deep learning networks architectures or using different input parameters. Also, my LSTM network could have been tried in terms of multivariate time series analysis, thus inputting more factors to the model, like daily cases, daily recoveries, or even time itself. Moreover, exploratory data analysis with unsupervised learning method, in my case that is Hierarchical Clustering have not been investigated as thoroughly as I initially wanted. For example, it could be really beneficial for the analysis to try more different clustering configurations and various principal components numbers, although it was still possible to
+Obviously, some of the models’ results could have been improved, but I suppose it would be necessary to take more time for testing various configurations, including hyperparameters tuning, different deep learning networks architectures or using different input parameters. Also, my LSTM network could have been tried in terms of multivariate time series analysis, thus inputting more factors to the model, like daily cases, daily recoveries, or even time itself. Moreover, exploratory data analysis with unsupervised learning method, in my case that is Hierarchical Clustering have been investigated without diving into too much details. For example, it could be really beneficial for the analysis to try more different clustering configurations and various principal components numbers, although it was still possible to
 reach some sensible conclusions with the current clustering results.
