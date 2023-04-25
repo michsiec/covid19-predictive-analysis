@@ -31,7 +31,7 @@ Second dataset, a lookup table that was included in the dataset provided by John
 
 
 ### Data Cleaning, Preparation and EDA
-The data cleaning and preparation, as well as exploratory data analysis have been performed in RStudio (*DataCleaning_Preparation.Rmd*, *ExploratoryDataAnalysis.Rmd*).
+The data cleaning and preparation, as well as exploratory data analysis have been performed in RStudio (*data_preprocessing.Rmd*, *exploratory_data_analysis.Rmd*).
 During the data investigation, it has been discovered that there is an issue with recovery observations after 04/08/2021 (they could have stopped being recorded). Such fact has forced us to decide how to proceed with the dataset.
 It has been decided that it is better to have possibly more variables for later predictions with Machine Learning and Deep Learning methods, rather than having just more
 observations, the dataset, after performing data cleaning and preparation, has been decreased to 25,246 rows (561 per country), covering the period between 22/01/2020 and 04/08/2021.
@@ -77,7 +77,7 @@ Even though the algorithm suggested to use five clusters, I used four since I ha
 It has been also spotted that `new.d`, `new.c` and `new.r` were grouped into one cluster, and parameters’ rates (`death_rate`, `infection_rate`, `recovery_rate`) were clustered together. 
 
 ### Predictions using Machine Learning and Deep Learning
-The whole process of predictive data analysis have been described in *PredictiveDataAnalysis.ipynb* notebook file.
+The whole process of predictive data analysis have been described in *predictive_data_analysis.ipynb* notebook file.
 For proper performance evaluation of the models, three main metrics have been used: Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), and R-squared.
 
 ![image](https://user-images.githubusercontent.com/96207926/194923524-8952cf4c-d081-4cf1-ac85-560b1ded28a7.png)
