@@ -26,7 +26,7 @@ After performing data cleaning and preparation, the dataset was left with 25246 
 | recovery_rate | float | *The number of recovered per 100,000 people in each country per day* |
 | infection_rate | float | *The number of infected people per 100,000 people in each country per day* |
 
-For the purpose of data preparation, two additional datasets have been used for easier column generation. First one came from (https://www.kaggle.com/datasets/folaraz/world-countries-and-continents-details?select=Countries+Longitude+and+Latitude.csv) and was used to add the "continent" column to the dataset. 
+For the purpose of data preparation, two additional datasets have been used for easier column generation. First one came from [Kaggle](https://www.kaggle.com/datasets/folaraz/world-countries-and-continents-details?select=Countries+Longitude+and+Latitude.csv) and was used to add the "continent" column to the dataset. 
 Second dataset, a lookup table that was included in the dataset provided by John Hopkins University, has been used to add a population column to the dataset.
 
 
@@ -59,8 +59,7 @@ My area of focus was to investigate second cluster, that is sixth to tenth most 
 Furthermore, an unsupervised learning method was used in order to increase
 the depth of the analysis. I have decided to use hierarchical clustering algorithm to group the
 observations and try to gain insight into possible patterns hidden in our data. In order to perform
-it, the functions from OpenClassrooms “Perform an Exploratory Data Analysis” course
-(https://github.com/OpenClassrooms-Student-Center/Multivariate-Exploratory-Analysis) have been
+it, the functions from [OpenClassrooms “Perform an Exploratory Data Analysis” course](https://github.com/OpenClassrooms-Student-Center/Multivariate-Exploratory-Analysis) have been
 used and slightly modified for my case. Some initial assumptions have been made before proceeding to
 the clustering:
 - Euclidean distance has been chosen as a distance measure between the data points
