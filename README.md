@@ -87,7 +87,7 @@ For evaluation purposes, following metrics have been used:
 q_{j} = \frac{\displaystyle e_{j}}
     {\displaystyle\frac{1}{T-1}\sum_{t=2}^T |y_{t}-y_{t-1}|}
     
-\text{MASE} = \text{mean}(|q_{j}|)
+MASE = mean(|q_{j}|)
 
 
 
