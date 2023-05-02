@@ -91,10 +91,10 @@ In order to simplify the prediction process, the dataset have been appropriately
 For evaluation purposes, following metrics have been used:
 * Mean Absolute Error (MAE) - scale-dependent forecasting error that measures the absolute difference between actual and predicted values.
 * Mean Absolute Scaled Error (MASE) - scaled version of mean absolute error that is used when comparing forecast accuracy across series with different units.
-* Mean Absolute Percentage Error (MAPE)
-* Mean Squared Error (MSE)
+* Mean Absolute Percentage Error (MAPE) 
+* Mean Squared Error (MSE) - measures the average of the square of the errors
 * Root Mean Squared Error (RMSE)
-* R-squared (R2)
+* R-squared (R2) - represents the proportion of the variance for a dependent variable that's explained by an independent variable in a regression model
 
 Since not every metric can be completely useful in analysed scenario, main metrics taken into consideration when evaluating performance are MAE, MSE, and R2. The metrics description can be found here: [Forecasting: Principles and Practice 3rd Ed. 5.8](https://otexts.com/fpp3/accuracy.html).
 
@@ -142,12 +142,12 @@ Table containing evaluation metrics has been shown below. It is worth to note he
 
 | Metric | PolyReg (deg = 2) | PolyReg (deg = 3) | LSTM (normalised data) |
 |--------|-------------------|-------------------|------------------------|
-| MAE | 591.15 | 694.84 | 0.036 |
-| MSE | 400621.34 | 539553.1 | 0.0025 |
-| R2 | 0.5 | 0.33 | 0.83 |
-| RMSE | 632.95 | 734.54 | 0.05 |
-| MAPE | 47.86 | 58.76 | 18.79 |
-| MASE | 2.37 | 2.79 | 1.046 |
+| *MAE* | 591.15 | 694.84 | 0.036 |
+| *MSE* | 400621.34 | 539553.1 | 0.0025 |
+| *R2* | 0.5 | 0.33 | 0.83 |
+| *RMSE* | 632.95 | 734.54 | 0.05 |
+| *MAPE* | 47.86 | 58.76 | 18.79 |
+| *MASE* | 2.37 | 2.79 | 1.046 |
 
 
 ### Conclusions
