@@ -139,7 +139,7 @@ The results achieved by the LSTM on test data has been shown below:
 
 
 | Metric | PolyReg (deg = 2) | PolyReg (deg = 3) | LSTM (normalised data) |
-|--------|--------|-------------||-------------------|
+|--------|-------------------|-------------------|------------------------|
 | MAE | 591.15 | 694.84 | 0.036 |
 | MSE | 400621.34 | 539553.1 | 0.0025 |
 | R2 | 0.5 | 0.33 | 0.83 |
