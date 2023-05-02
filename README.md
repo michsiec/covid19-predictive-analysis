@@ -76,10 +76,19 @@ Even though the algorithm suggested to use five clusters, I used four since I ha
 It has been also spotted that `new.d`, `new.c` and `new.r` were grouped into one cluster, and parameters’ rates (`death_rate`, `infection_rate`, `recovery_rate`) were clustered together. 
 
 ### Predictions using Machine Learning and Deep Learning
-The whole process of predictive data analysis have been described in *predictive_data_analysis.ipynb* notebook file.
-For proper performance evaluation of the models, three main metrics have been used: Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), and R-squared.
+After data cleaning and preparation, and exploratory data analysis, it's time to perform predictive data analysis on the dataset.
 
-![image](https://user-images.githubusercontent.com/96207926/194923524-8952cf4c-d081-4cf1-ac85-560b1ded28a7.png)
+In order to simplify the prediction process, the dataset have been appropriately converted for each predictive method; some selected variables have been summed up to make predictions for Europe as a whole, rather than analyzing each country separately. The presented approach also leaves some space for analyzing some particular countries separately if desired.
+
+For evaluation purposes, following metrics have been used:
+* Mean Absolute Error (MAE) - scale-dependent forecasting error that measures the absolute difference between actual and predicted values.
+* Mean Absolute Scaled Error (MASE) - scaled version of mean absolute error that is used when comparing forecast accuracy across series with different units.
+
+q_{j} = \frac{\displaystyle e_{j}}
+    {\displaystyle\frac{1}{T-1}\sum_{t=2}^T |y_{t}-y_{t-1}|}
+    
+\text{MASE} = \text{mean}(|q_{j}|)
+
 
 
 ### Conclusions
