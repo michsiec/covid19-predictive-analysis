@@ -110,6 +110,8 @@ While fitting the model I have tried different configurations, that is using dif
 
 Furthermore, since it has been noticed during performing Exploratory Data Analysis that the variable `new.d` has higher correlation values with `new.c` and `new.r`, they have been used as predictors in the model.
 
+Next plots show how the polynomial regression models performed on test data:
+
 <img width="1318" alt="Screenshot 2023-05-02 at 13 27 08" src="https://user-images.githubusercontent.com/96207926/235666022-a1bf4816-5b8e-4752-b861-82ca40c69b99.png">
 
 <img width="1315" alt="Screenshot 2023-05-02 at 13 30 18" src="https://user-images.githubusercontent.com/96207926/235666588-f34c408c-6ee0-4887-9a4c-0eaba9f19bb3.png">
@@ -129,20 +131,24 @@ Also, the data has been initially pre-processed using 'tf.Data' API for better p
 
 Model summary:
 
+<img width="336" alt="Screenshot 2023-05-02 at 14 05 52" src="https://user-images.githubusercontent.com/96207926/235676111-043bad83-52db-406d-beea-6a86f52b4c9f.png">
+
+The results achieved by the LSTM on test data has been shown below: 
+
 <img width="1302" alt="Screenshot 2023-05-02 at 13 40 38" src="https://user-images.githubusercontent.com/96207926/235669210-ee39bd3a-31b6-452b-a9ae-101401942ce5.png">
 
 
-| PolyReg (deg = 2) | PolyReg (deg = 3) | LSTM (normalised data) |
-|------|--------|-------------|
-| MAE | integer | *Current row/observation* |
-| MSE | string | *Name of the country* |
-| R2 | string | *3 letter country code* |
-| RMSE | date | *Date of the observation (YYYY-MM-DD)* |
-| MAPE | integer | *The cumulative amount of confirmed positive cases recorded in a country on that date* |
-| MASE | integer | *The cumulative amount of deaths recorded in a country on that date* |
-| recovered | integer | *The cumulative amount of recovered recorded in a country on that date* |
+| Metric | PolyReg (deg = 2) | PolyReg (deg = 3) | LSTM (normalised data) |
+|--------|--------|-------------||-------------------|
+| MAE | 591.15 | 694.84 | 0.036 |
+| MSE | 400621.34 | 539553.1 | 0.0025 |
+| R2 | 0.5 | 0.33 | 0.83 |
+| RMSE | 632.95 | 734.54 | 0.05 |
+| MAPE | 47.86 | 58.76 | 18.79 |
+| MASE | 2.37 | 2.79 | 1.046 |
+
 
 ### Conclusions
 Generally some of the models’ results could have been improved, but it would probably be necessary to take more time for testing various configurations, including hyperparameters tuning, different deep learning networks architectures or using different input parameters. Also, LSTM network could have been configured for multivariate time series analysis, thus inputting more factors to the model, like daily cases, daily recoveries, or even time itself. Moreover, exploratory data analysis with unsupervised learning method (in my case that is Hierarchical Clustering) have been investigated briefly without diving into too much details. For example, it could be really beneficial for the analysis to try more different clustering configurations and various principal components numbers, although it was still possible to
 reach some sensible conclusions with the current clustering results.
-Definitely the biggest disadvantage we had to face during the project was relatively small amount of data to work with for forecasting purposes. Having only 561 days of data is definitely not sufficient to use deep neural networks, that is why the results achieved by using LSTM could be not satisfying enough. Even though the evaluation might suggest the network is performing reasonably well, there is still high risk that it might not generalise well to the unseen data. However, it serves as a good example that the traditional machine learning algorithms are still great tools to use when having insufficient amounts of data.
+Definitely the biggest disadvantage we had to face during the project was relatively small amount of data to work with for forecasting purposes. Having only 561 days of data is definitely not sufficient to use deep neural networks, that is why the results achieved by using LSTM could be not satisfying enough. Moreover, the data normalisation is not recommended to use for polynomial regression, that is why the comparison of methods above can seem misleading. Even though the evaluation might suggest the network is performing reasonably well, there is still high risk that it might not generalise well to the unseen data. However, it serves as a good example that the traditional machine learning algorithms are still great tools to use when having insufficient amounts of data.
