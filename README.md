@@ -84,10 +84,8 @@ For evaluation purposes, following metrics have been used:
 * Mean Absolute Error (MAE) - scale-dependent forecasting error that measures the absolute difference between actual and predicted values.
 * Mean Absolute Scaled Error (MASE) - scaled version of mean absolute error that is used when comparing forecast accuracy across series with different units.
 
-q_{j} = \frac{\displaystyle e_{j}}
-    {\displaystyle\frac{1}{T-1}\sum_{t=2}^T |y_{t}-y_{t-1}|}
-    
-MASE = mean(|q_{j}|)
+<img width="756" alt="Screenshot 2023-05-02 at 13 07 36" src="https://user-images.githubusercontent.com/96207926/235662189-8e333d98-1ac8-4b00-921e-efa77980a978.png">
+
 
 
 
