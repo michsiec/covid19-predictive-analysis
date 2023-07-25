@@ -1,6 +1,6 @@
 # Predictive Analysis of COVID-19
 
-Group project regarding COVID-19 data analysis and forecasting using different machine learning and deep learning methods. The data used for the analysis comes from the repository of the [CSSE John Hopkins University](https://github.com/CSSEGISandData/COVID-19) 
+Group project regarding COVID-19 data analysis and forecasting using different machine learning and deep learning methods. The data used for the analysis comes from the repository of the [CSSE John Hopkins University](https://github.com/CSSEGISandData/COVID-19).
 
 For the purpose of the project, the scope of the analysis has been narrowed down to one continent, Europe. The initial dataset (with global information, before performing data cleaning and preparation) had 145,142 observations (gathered from 22 Jan 2020 to 15 Feb 2022) in following columns:
 
