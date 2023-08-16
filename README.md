@@ -101,7 +101,7 @@ Since not every metric can be completely useful in analysed scenario, main metri
 ### Polynomial Regression
 In order to perform prediction using machine learning method, I have used **polynomial regression**, which is a form of a linear regression and a special case of multiple linear regression. 
 
-Polynomial regression is a reasonably simple method that tries to estimate the relationship between the independent and dependent variables as an n-th degree polynomial. 
+**Polynomial regression** is a reasonably simple method that tries to estimate the relationship between the independent and dependent variables as an n-th degree polynomial. 
 
 The con of this method is that it is highly sensitive to the outliers, however, it has been checked during data cleaning and preparation that no outliers are present in out dataset, hence this method was possible to use. The dataset have been split into training and testing set with an 80/20 split, and scaled 
 by using `fit_transform()` function so that it could be eligible for fitting the polynomial regression model. 
@@ -120,14 +120,14 @@ Next plots show how the polynomial regression models performed on test data:
 
 
 ### LSTM Model
-Long-Short Term Memory Network is a special case of recurrent neural network that is able to learn long-term dependencies, especially in sequence prediction problems, therefore it is well suited for forecasting tasks.
+**Long-Short Term Memory (LSTM)** Network is a special case of recurrent neural network that is able to learn long-term dependencies, especially in sequence prediction problems, therefore it is well suited for forecasting tasks.
 
-For simplification, univariate time series analysis has been performed, meaning that only daily deaths variable 'new.d' has been used to predict the future values.
+For simplification, univariate time series analysis has been performed, meaning that only daily deaths variable `new.d` has been used to predict the future values.
 
 In order to achieve better performance, it has been decided that the data should be normalised.
-Normalization is a process of rescaling the data from the original range so that all values are within the range of 0 and 1. Since neural networks tend to train better and faster on rescaled data, and it is possible in this case to estimate the minimum and maximum values in the available data, the daily deaths variable `new.d` has been normalized. 
+**Normalization** is a process of rescaling the data from the original range so that all values are within the range of 0 and 1. Since neural networks tend to train better and faster on rescaled data, and it is possible in this case to estimate the minimum and maximum values in the available data, the daily deaths variable `new.d` has been normalized. 
 
-Also, the data has been initially pre-processed using 'tf.Data' API for better performance and decreasing training time.
+Also, the data has been initially pre-processed using `tf.Data` API for better performance and decreasing training time.
 
 Model summary:
 
