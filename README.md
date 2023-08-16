@@ -33,7 +33,7 @@ Second dataset, a lookup table that was included in the dataset provided by John
 
 
 ## Data Cleaning, Preparation and Exploratory Data Analysis
-The data cleaning and preparation, as well as exploratory data analysis have been performed in RStudio (*data_preprocessing.Rmd*, *exploratory_data_analysis.Rmd*).
+The data cleaning and preparation, as well as exploratory data analysis have been performed in RStudio (markdown documents `data_preprocessing.Rmd` and `exploratory_data_analysis.Rmd`).
 During the data investigation, it has been discovered that there is an issue with recovery observations after 04/08/2021 (they could have stopped being recorded). Such fact has forced us to decide how to proceed with the dataset.
 It has been decided that it is better to have possibly more variables for later predictions with Machine Learning and Deep Learning methods, rather than having just more
 observations, the dataset, after performing data cleaning and preparation, has been decreased to 25,246 rows (561 per country), covering the period between 22/01/2020 and 04/08/2021.
@@ -101,7 +101,7 @@ Since not every metric can be completely useful in analysed scenario, main metri
 ### Polynomial Regression
 In order to perform prediction using machine learning method, I have used **polynomial regression**, which is a form of a linear regression and a special case of multiple linear regression. 
 
-Polynomial regression is a reasonably simple method that tries to estimate the relationship between the independent and dependent variables as an nth degree polynomial. 
+Polynomial regression is a reasonably simple method that tries to estimate the relationship between the independent and dependent variables as an n-th degree polynomial. 
 
 The con of this method is that it is highly sensitive to the outliers, however, it has been checked during data cleaning and preparation that no outliers are present in out dataset, hence this method was possible to use. The dataset have been split into training and testing set with an 80/20 split, and scaled 
 by using `fit_transform()` function so that it could be eligible for fitting the polynomial regression model. 
